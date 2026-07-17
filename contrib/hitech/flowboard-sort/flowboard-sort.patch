@@ -1,0 +1,454 @@
+--- a/interface/patient_tracker/patient_tracker.php
++++ b/interface/patient_tracker/patient_tracker.php
+@@ -152,6 +152,11 @@
+     <?php } ?>
+ 
+     <script src="<?php echo $GLOBALS['web_root']; ?>/interface/main/messages/js/reminder_appts.js?v=<?php echo $v_js_includes; ?>"></script>
++    <style>
++        td.flb-sortable { cursor: pointer; white-space: nowrap; user-select: none; }
++        td.flb-sortable:hover { text-decoration: underline; }
++        td.flb-sortable .flb-caret { font-size: 0.7em; opacity: 0.9; }
++    </style>
+ </head>
+ 
+ <body>
+@@ -374,78 +379,78 @@
+                     <thead class="table-primary">
+                     <tr class="small font-weight-bold text-center">
+                         <?php if ($GLOBALS['ptkr_show_pid']) { ?>
+-                            <td class="dehead text-center text-ovr-dark" name="kiosk_hide">
+-                                <?php echo xlt('PID'); ?>
++                            <td class="dehead text-center text-ovr-dark flb-sortable" data-col="pid" name="kiosk_hide">
++                                <?php echo xlt('PID'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                             </td>
+                         <?php } ?>
+-                        <td class="dehead text-center text-ovr-dark" style="max-width: 150px;">
+-                            <?php echo xlt('Patient'); ?>
++                        <td class="dehead text-center text-ovr-dark flb-sortable" data-col="patient" style="max-width: 150px;">
++                            <?php echo xlt('Patient'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+                         <?php if ($GLOBALS['ptkr_visit_reason'] == '1') { ?>
+-                            <td class="dehead text-center text-ovr-dark" name="kiosk_hide">
+-                                <?php echo xlt('Appt Comment'); ?>
++                            <td class="dehead text-center text-ovr-dark flb-sortable" data-col="comment" name="kiosk_hide">
++                                <?php echo xlt('Appt Comment'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                             </td>
+                         <?php } ?>
+                         <?php if ($GLOBALS['ptkr_show_encounter']) { ?>
+-                            <td class="dehead text-center text-ovr-dark" name="kiosk_hide">
+-                                <?php echo xlt('Encounter'); ?>
++                            <td class="dehead text-center text-ovr-dark flb-sortable" data-col="encounter" name="kiosk_hide">
++                                <?php echo xlt('Encounter'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                             </td>
+                         <?php } ?>
+ 
+                         <?php if ($GLOBALS['ptkr_date_range'] == '1') { ?>
+-                            <td class="dehead text-center text-ovr-dark" name="kiosk_hide">
+-                                <?php echo xlt('Appt Date'); ?>
++                            <td class="dehead text-center text-ovr-dark flb-sortable" data-col="apptdate" name="kiosk_hide">
++                                <?php echo xlt('Appt Date'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                             </td>
+                         <?php } ?>
+-                        <td class="dehead text-center text-ovr-dark">
+-                            <?php echo xlt('Appt Time'); ?>
++                        <td class="dehead text-center text-ovr-dark flb-sortable" data-col="appttime">
++                            <?php echo xlt('Appt Time'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+-                        <td class="dehead text-center text-ovr-dark">
+-                            <?php echo xlt('Arrive Time'); ?>
++                        <td class="dehead text-center text-ovr-dark flb-sortable" data-col="arrivetime">
++                            <?php echo xlt('Arrive Time'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+-                        <td class="dehead text-center d-block d-sm-none text-ovr-dark">
+-                            <?php echo xlt('Arrival'); ?>
++                        <td class="dehead text-center d-block d-sm-none text-ovr-dark flb-sortable" data-col="arrivetime">
++                            <?php echo xlt('Arrival'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+-                        <td class="dehead text-center  d-sm-table-cell text-ovr-dark">
+-                            <?php echo xlt('Appt Status'); ?>
++                        <td class="dehead text-center  d-sm-table-cell text-ovr-dark flb-sortable" data-col="apptstatus">
++                            <?php echo xlt('Appt Status'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+-                        <td class="dehead text-center  d-sm-table-cell text-ovr-dark">
+-                            <?php echo xlt('Current Status'); ?>
++                        <td class="dehead text-center  d-sm-table-cell text-ovr-dark flb-sortable" data-col="currentstatus">
++                            <?php echo xlt('Current Status'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+-                        <td class="dehead text-center d-block d-table-cell d-sm-none text-ovr-dark">
+-                            <?php echo xlt('Current'); ?>
++                        <td class="dehead text-center d-block d-table-cell d-sm-none text-ovr-dark flb-sortable" data-col="currentstatus">
++                            <?php echo xlt('Current'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+-                        <td class="dehead text-center text-ovr-dark" name="kiosk_hide">
+-                            <?php echo xlt('Visit Type'); ?>
++                        <td class="dehead text-center text-ovr-dark flb-sortable" data-col="visittype" name="kiosk_hide">
++                            <?php echo xlt('Visit Type'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+                         <?php if (count($chk_prov) > 1) { ?>
+-                            <td class="dehead text-center d-sm-table-cell text-ovr-dark">
+-                                <?php echo xlt('Provider'); ?>
++                            <td class="dehead text-center d-sm-table-cell text-ovr-dark flb-sortable" data-col="provider">
++                                <?php echo xlt('Provider'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                             </td>
+                         <?php } ?>
+-                        <td class="dehead text-center text-ovr-dark">
+-                            <?php echo xlt('Total Time'); ?>
++                        <td class="dehead text-center text-ovr-dark flb-sortable" data-col="totaltime">
++                            <?php echo xlt('Total Time'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+-                        <td class="dehead text-center  d-sm-table-cell text-ovr-dark">
+-                            <?php echo xlt('Check Out Time'); ?>
++                        <td class="dehead text-center  d-sm-table-cell text-ovr-dark flb-sortable" data-col="checkouttime">
++                            <?php echo xlt('Check Out Time'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+-                        <td class="dehead text-center d-block d-table-cell d-sm-none text-ovr-dark">
+-                            <?php echo xlt('Out Time'); ?>
++                        <td class="dehead text-center d-block d-table-cell d-sm-none text-ovr-dark flb-sortable" data-col="checkouttime">
++                            <?php echo xlt('Out Time'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                         </td>
+                         <?php
+                         if ($GLOBALS['ptkr_show_staff']) { ?>
+-                            <td class="dehead text-center text-ovr-dark" name="kiosk_hide">
+-                                <?php echo xlt('Updated By'); ?>
++                            <td class="dehead text-center text-ovr-dark flb-sortable" data-col="updatedby" name="kiosk_hide">
++                                <?php echo xlt('Updated By'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                             </td>
+                             <?php
+                         }
+                         if ($_REQUEST['kiosk'] != '1') {
+                             if ($GLOBALS['drug_screen']) { ?>
+-                                <td class="dehead center text-ovr-dark" name="kiosk_hide">
+-                                    <?php echo xlt('Random Drug Screen'); ?>
++                                <td class="dehead center text-ovr-dark flb-sortable" data-col="drugscreen" name="kiosk_hide">
++                                    <?php echo xlt('Random Drug Screen'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                                 </td>
+-                                <td class="dehead center text-ovr-dark" name="kiosk_hide">
+-                                    <?php echo xlt('Drug Screen Completed'); ?>
++                                <td class="dehead center text-ovr-dark flb-sortable" data-col="drugcompleted" name="kiosk_hide">
++                                    <?php echo xlt('Drug Screen Completed'); ?> <span class="flb-caret" aria-hidden="true"></span>
+                                 </td>
+                                 <?php
+                             }
+@@ -596,31 +601,31 @@
+ 
+                         if ($GLOBALS['ptkr_show_pid']) {
+                             ?>
+-                            <td class="detail text-center" name="kiosk_hide">
++                            <td class="detail text-center" name="kiosk_hide" data-col="pid" data-sortval="<?php echo attr((int) $appt_pid); ?>">
+                                 <?php echo text($appt_pid); ?>
+                             </td>
+                             <?php
+                         }
+ 
+                         ?>
+-                        <td class="detail text-center" name="kiosk_hide">
++                        <td class="detail text-center" name="kiosk_hide" data-col="patient" data-sortval="<?php echo attr(strtolower((string) $ptname)); ?>">
+                             <a href="#" onclick="return topatient(<?php echo attr_js($appt_pid); ?>,<?php echo attr_js($appt_enc); ?>)">
+                                 <?php echo text($ptname); ?></a>
+                         </td>
+ 
+-                        <td class="detail text-center" style="white-space: normal;" name="kiosk_show">
++                        <td class="detail text-center" style="white-space: normal;" name="kiosk_show" data-col="patient" data-sortval="<?php echo attr(strtolower((string) $ptname)); ?>">
+                             <a href="#" onclick="return topatient(<?php echo attr_js($appt_pid); ?>,<?php echo attr_js($appt_enc); ?>)">
+                                 <?php echo text($ptname_short); ?></a>
+                         </td>
+ 
+                         <!-- reason -->
+                         <?php if ($GLOBALS['ptkr_visit_reason']) { ?>
+-                            <td class="detail text-center" name="kiosk_hide">
++                            <td class="detail text-center" name="kiosk_hide" data-col="comment" data-sortval="<?php echo attr(strtolower((string) $reason_visit)); ?>">
+                                 <?php echo text($reason_visit) ?>
+                             </td>
+                         <?php } ?>
+                         <?php if ($GLOBALS['ptkr_show_encounter']) { ?>
+-                            <td class="detail text-center" name="kiosk_hide">
++                            <td class="detail text-center" name="kiosk_hide" data-col="encounter" data-sortval="<?php echo attr((int) $appt_enc); ?>">
+                                 <?php
+                                 if ($appt_enc != 0) {
+                                     echo text($appt_enc);
+@@ -629,22 +634,27 @@
+                             </td>
+                         <?php } ?>
+                         <?php if ($GLOBALS['ptkr_date_range'] == '1') { ?>
+-                            <td class="detail text-center" name="kiosk_hide">
++                            <td class="detail text-center" name="kiosk_hide" data-col="apptdate" data-sortval="<?php echo attr($date_squash); ?>">
+                                 <?php echo text(oeFormatShortDate($appointment['pc_eventDate']));
+                                 ?>
+                             </td>
+                         <?php } ?>
+-                        <td class="detail text-center">
++                        <td class="detail text-center" data-col="appttime" data-sortval="<?php echo attr((string) $appt_time); ?>">
+                             <?php echo text(oeFormatTime($appt_time)); ?>
+                         </td>
+-                        <td class="detail text-center">
++                        <td class="detail text-center" data-col="arrivetime" data-sortval="<?php echo attr((string) $newarrive); ?>">
+                             <?php
+                             if ($newarrive) {
+                                 echo text(oeFormatTime($newarrive));
+                             }
+                             ?>
+                         </td>
+-                        <td class="detail text-center ">
++                        <?php
++                        $appt_status_disp = ($appointment['room'] > '')
++                            ? getListItemTitle('patient_flow_board_rooms', $appt_room)
++                            : getListItemTitle("apptstat", $status);
++                        ?>
++                        <td class="detail text-center " data-col="apptstatus" data-sortval="<?php echo attr(strtolower((string) $appt_status_disp)); ?>">
+                             <?php if (empty($tracker_id)) { //for appt not yet with tracker id and for recurring appt ?>
+                             <a class="btn btn-primary btn-sm" onclick="return calendarpopup(<?php echo attr_js($appt_eid) . "," . attr_js($date_squash); // calls popup for add edit calendar event?>)">
+                             <?php } else { ?>
+@@ -674,10 +684,11 @@
+                         }
+ 
+                         $timecheck = round(abs($to_time - ($from_time ?? null)) / 60, 0);
++                        $cur_sortval = (strtotime((string) $newarrive) != '') ? (string) $timecheck : '';
+                         if ($timecheck >= $statalert && ($statalert > '0')) { // Determine if the time in status limit has been reached.
+-                            echo "<td class='text-center  js-blink-infinite small' nowrap>  "; // and if so blink
++                            echo "<td class='text-center  js-blink-infinite small' data-col='currentstatus' data-sortval='" . attr($cur_sortval) . "' nowrap>  "; // and if so blink
+                         } else {
+-                            echo "<td class='detail text-center' nowrap> "; // and if not do not blink
++                            echo "<td class='detail text-center' data-col='currentstatus' data-sortval='" . attr($cur_sortval) . "' nowrap> "; // and if not do not blink
+                         }
+                         if (($yestime == '1') && ($timecheck >= 1) && (strtotime((string) $newarrive) != '')) {
+                             echo text($timecheck . ' ' . ($timecheck >= 2 ? xl('minutes') : xl('minute')));
+@@ -690,34 +701,37 @@
+                         //end time in current status
+                         echo "</td>";
+                         ?>
+-                        <td class="detail text-center" name="kiosk_hide">
++                        <td class="detail text-center" name="kiosk_hide" data-col="visittype" data-sortval="<?php echo attr(strtolower((string) $appointment['pc_title'])); ?>">
+                             <?php echo xlt($appointment['pc_title']); ?>
+                         </td>
+                         <?php
+                         if (count($chk_prov) > 1) { ?>
+-                            <td class="detail text-center  d-sm-table-cell">
++                            <td class="detail text-center  d-sm-table-cell" data-col="provider" data-sortval="<?php echo attr(strtolower((string) $docname)); ?>">
+                                 <?php echo text($docname); ?>
+                             </td>
+                             <?php
+                         } ?>
+-                        <td class="detail text-center">
++                        <?php
++                        // total time in practice
++                        if (strtotime((string) $newend) != '') {
++                            $from_time = strtotime((string) $newarrive);
++                            $to_time = strtotime((string) $newend);
++                        } else {
++                            $from_time = strtotime((string) $newarrive);
++                            $to_time = strtotime(date("Y-m-d H:i:s"));
++                        }
++                        $timecheck2 = round(abs($to_time - $from_time) / 60, 0);
++                        $total_sortval = (strtotime((string) $newarrive) != '') ? (string) $timecheck2 : '';
++                        ?>
++                        <td class="detail text-center" data-col="totaltime" data-sortval="<?php echo attr($total_sortval); ?>">
+                             <?php
+-                            // total time in practice
+-                            if (strtotime((string) $newend) != '') {
+-                                $from_time = strtotime((string) $newarrive);
+-                                $to_time = strtotime((string) $newend);
+-                            } else {
+-                                $from_time = strtotime((string) $newarrive);
+-                                $to_time = strtotime(date("Y-m-d H:i:s"));
+-                            }
+-                            $timecheck2 = round(abs($to_time - $from_time) / 60, 0);
+                             if (strtotime((string) $newarrive) != '' && ($timecheck2 >= 1)) {
+                                 echo text($timecheck2 . ' ' . ($timecheck2 >= 2 ? xl('minutes') : xl('minute')));
+                             }
+                             // end total time in practice
+                             echo text($appointment['pc_time'] ?? ''); ?>
+                         </td>
+-                        <td class="detail text-center">
++                        <td class="detail text-center" data-col="checkouttime" data-sortval="<?php echo attr((string) $newend); ?>">
+                             <?php
+                             if (strtotime((string) $newend) != '') {
+                                 echo text(oeFormatTime(substr((string) $newend, 11))) ;
+@@ -727,14 +741,14 @@
+                         <?php
+                         if ($GLOBALS['ptkr_show_staff'] == '1') {
+                             ?>
+-                                <td class="detail text-center" name="kiosk_hide">
++                                <td class="detail text-center" name="kiosk_hide" data-col="updatedby" data-sortval="<?php echo attr(strtolower((string) $appointment['user'])); ?>">
+                                     <?php echo text($appointment['user']) ?>
+                                 </td>
+                             <?php
+                         }
+                         if ($GLOBALS['drug_screen']) {
+                             if (strtotime((string) $newarrive) != '') { ?>
+-                                <td class="detail text-center" name="kiosk_hide">
++                                <td class="detail text-center" name="kiosk_hide" data-col="drugscreen" data-sortval="<?php echo attr($appointment['random_drug_test'] == '1' ? '1' : '0'); ?>">
+                                     <?php
+                                     if ($appointment['random_drug_test'] == '1') {
+                                         echo xlt('Yes');
+@@ -744,10 +758,10 @@
+                                 </td>
+                                 <?php
+                             } else { ?>
+-                                <td class="detail text-center" name="kiosk_hide"></td>
++                                <td class="detail text-center" name="kiosk_hide" data-col="drugscreen" data-sortval=""></td>
+                             <?php }
+                             if (strtotime((string) $newarrive) != '' && $appointment['random_drug_test'] == '1') { ?>
+-                                <td class="detail text-center" name="kiosk_hide">
++                                <td class="detail text-center" name="kiosk_hide" data-col="drugcompleted" data-sortval="<?php echo attr($appointment['drug_screen_completed'] == '1' ? '1' : '0'); ?>">
+                                     <?php
+                                     if (strtotime((string) $newend) != '') {
+                                         // the following block allows the check box for drug screens to be disabled once the status is check out ?>
+@@ -761,7 +775,7 @@
+                                 </td>
+                                 <?php
+                             } else { ?>
+-                                <td class="detail text-center" name="kiosk_hide"></td>
++                                <td class="detail text-center" name="kiosk_hide" data-col="drugcompleted" data-sortval=""></td>
+                             <?php }
+                         }
+                         ?>
+@@ -801,6 +815,67 @@
+     ?>
+     <script>
+         var auto_refresh = null;
++
++        // Flow Board column sorting. The table is fully re-rendered on every refresh,
++        // so the chosen sort is kept here and re-applied by drawTable() after each redraw.
++        // Seeded from the Flow Board default-sort globals (site default, or the user's
++        // own User Settings override).
++        var flbSort = {
++            col: <?php echo js_escape(($GLOBALS['ptkr_default_sort'] ?? '') ?: 'appttime'); ?>,
++            dir: <?php echo js_escape((($GLOBALS['ptkr_default_sort_dir'] ?? '') === 'desc') ? 'desc' : 'asc'); ?>
++        };
++
++        // Read a row's sort key for a given column: prefer the cell's normalized
++        // data-sortval, fall back to its visible text.
++        function flbCellVal(row, col) {
++            var cell = row.querySelector('td[data-col="' + col + '"]');
++            if (!cell) {
++                return '';
++            }
++            var v = cell.getAttribute('data-sortval');
++            return (v !== null) ? v : (cell.textContent || '').trim();
++        }
++
++        // Reorder the visible flow board rows by the current flbSort selection and
++        // refresh the header carets. Empty values always sort last.
++        function applyFlbSort() {
++            var tbody = document.querySelector('#flb_table tbody');
++            if (!tbody) {
++                return;
++            }
++            var col = flbSort.col;
++            var dir = flbSort.dir;
++            var numRe = /^-?\d+(\.\d+)?$/;
++            var rows = Array.prototype.slice.call(tbody.getElementsByTagName('tr'));
++            rows.sort(function (a, b) {
++                var av = flbCellVal(a, col);
++                var bv = flbCellVal(b, col);
++                if (av === '' && bv === '') {
++                    return 0;
++                }
++                if (av === '') {
++                    return 1;   // blanks last, regardless of direction
++                }
++                if (bv === '') {
++                    return -1;
++                }
++                var cmp;
++                if (numRe.test(av) && numRe.test(bv)) {
++                    cmp = parseFloat(av) - parseFloat(bv);
++                } else {
++                    cmp = String(av).localeCompare(String(bv), undefined, { numeric: true, sensitivity: 'base' });
++                }
++                return (dir === 'desc') ? -cmp : cmp;
++            });
++            rows.forEach(function (r) {
++                tbody.appendChild(r);
++            });
++            // update header direction indicators
++            $('#flb_table .flb-caret').html('');
++            $('#flb_table td.flb-sortable[data-col="' + col + '"] .flb-caret')
++                .html(dir === 'desc' ? ' ▼' : ' ▲');
++        }
++
+         //this can be refined to redact HIPAA material using @media print options.
+         window.parent.$("[name='flb']").attr('allowFullscreen', 'true');
+         $("[name='kiosk_hide']").show();
+@@ -894,6 +969,8 @@
+ 
+             refineMe();
+ 
++            applyFlbSort();
++
+             initTableButtons();
+ 
+         }
+@@ -1098,6 +1175,22 @@
+                 });
+             });
+ 
++            // Column-header sorting. #flb_table persists across refreshes (only its
++            // inner HTML is replaced), so this delegated handler survives redraws.
++            $('#flb_table').on('click', 'td.flb-sortable', function () {
++                var col = $(this).attr('data-col');
++                if (!col) {
++                    return;
++                }
++                if (flbSort.col === col) {
++                    flbSort.dir = (flbSort.dir === 'asc') ? 'desc' : 'asc';
++                } else {
++                    flbSort.col = col;
++                    flbSort.dir = 'asc';
++                }
++                applyFlbSort();
++            });
++
+             $('#filter_submit').click(function (e) {
+                 e.preventDefault;
+                 refreshMe();
+--- a/library/globals.inc.php
++++ b/library/globals.inc.php
+@@ -157,6 +157,8 @@
+     'ptkr_start_date',
+     'ptkr_end_date',
+     'checkout_roll_off',
++    'ptkr_default_sort',
++    'ptkr_default_sort_dir',
+     'patient_birthday_alert',
+     'patient_birthday_alert_manual_off',
+     'erx_import_status_message',
+@@ -2015,6 +2017,38 @@
+             xl('Flow Board will only display completed checkouts for this many minutes. Zero is continuous display.')
+         ],
+ 
++        'ptkr_default_sort' => [
++            xl('Flow Board: Default Sort Column'),
++            [
++                'patient'       => xl('Patient'),
++                'pid'           => xl('Patient ID'),
++                'comment'       => xl('Appt Comment'),
++                'encounter'     => xl('Encounter'),
++                'apptdate'      => xl('Appt Date'),
++                'appttime'      => xl('Appt Time'),
++                'arrivetime'    => xl('Arrive Time'),
++                'apptstatus'    => xl('Appt Status'),
++                'currentstatus' => xl('Current Status'),
++                'visittype'     => xl('Visit Type'),
++                'provider'      => xl('Provider'),
++                'totaltime'     => xl('Total Time'),
++                'checkouttime'  => xl('Check Out Time'),
++                'updatedby'     => xl('Updated By'),
++            ],
++            'appttime',                // default = Appt Time
++            xl('The column the Patient Flow Board is sorted by when first opened. Any column header can be clicked to re-sort, and each user may override this default in their own User Settings.')
++        ],
++
++        'ptkr_default_sort_dir' => [
++            xl('Flow Board: Default Sort Direction'),
++            [
++                'asc'  => xl('Ascending'),
++                'desc' => xl('Descending'),
++            ],
++            'asc',                     // default = Ascending
++            xl('The direction applied to the Flow Board default sort column when the board is first opened.')
++        ],
++
+         'drug_screen' => [
+             xl('Flow Board: Enable Random Drug Testing'),
+             'bool',                           // data type

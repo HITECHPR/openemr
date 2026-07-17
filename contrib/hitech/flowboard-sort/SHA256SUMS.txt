@@ -1,0 +1,6 @@
+# --- STOCK base (production files should match THESE to be safe for a drop-in) ---
+f21a9c146863513187c2d34d0a505ccbb75268e76b6f8c512a74074c1fed93c7  interface/patient_tracker/patient_tracker.php
+9b6c493872b8ab5c40b9a2fd5f876decb3ae1d77888f003fa54d3140d610c0a7  library/globals.inc.php
+# --- NEW patched result (verify your files match THESE after applying) ---
+35ff01d6974a27666d1718f6410e5da135f6a978c5ccb01125c5a001d54a18a1  interface/patient_tracker/patient_tracker.php
+2f63150974e086a2896b531c5f67320175b62b2d4a1f364e44c3829f8f563f0b  library/globals.inc.php
