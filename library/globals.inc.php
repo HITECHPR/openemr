@@ -157,6 +157,8 @@ $USER_SPECIFIC_GLOBALS = ['default_top_pane',
     'ptkr_start_date',
     'ptkr_end_date',
     'checkout_roll_off',
+    'ptkr_default_sort',
+    'ptkr_default_sort_dir',
     'patient_birthday_alert',
     'patient_birthday_alert_manual_off',
     'erx_import_status_message',
@@ -2013,6 +2015,38 @@ $GLOBALS_METADATA = [
             'num',
             '0',                       // default
             xl('Flow Board will only display completed checkouts for this many minutes. Zero is continuous display.')
+        ],
+
+        'ptkr_default_sort' => [
+            xl('Flow Board: Default Sort Column'),
+            [
+                'patient'       => xl('Patient'),
+                'pid'           => xl('Patient ID'),
+                'comment'       => xl('Appt Comment'),
+                'encounter'     => xl('Encounter'),
+                'apptdate'      => xl('Appt Date'),
+                'appttime'      => xl('Appt Time'),
+                'arrivetime'    => xl('Arrive Time'),
+                'apptstatus'    => xl('Appt Status'),
+                'currentstatus' => xl('Current Status'),
+                'visittype'     => xl('Visit Type'),
+                'provider'      => xl('Provider'),
+                'totaltime'     => xl('Total Time'),
+                'checkouttime'  => xl('Check Out Time'),
+                'updatedby'     => xl('Updated By'),
+            ],
+            'appttime',                // default = Appt Time
+            xl('The column the Patient Flow Board is sorted by when first opened. Any column header can be clicked to re-sort, and each user may override this default in their own User Settings.')
+        ],
+
+        'ptkr_default_sort_dir' => [
+            xl('Flow Board: Default Sort Direction'),
+            [
+                'asc'  => xl('Ascending'),
+                'desc' => xl('Descending'),
+            ],
+            'asc',                     // default = Ascending
+            xl('The direction applied to the Flow Board default sort column when the board is first opened.')
         ],
 
         'drug_screen' => [
